@@ -12,6 +12,7 @@ use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 Auth::routes();
 
 // Public routes
@@ -76,4 +77,9 @@ Route::middleware(['auth', AuthAdmin::class])->group(function() {
     Route::put('/admin/order/update-status',[AdminController::class,'update_order_status'])->name('admin.order.status.update');
 
     Route::get('/admin/slides',[AdminController::class,'slides'])->name('admin.slides');
+    Route::get('/admin/slide/add',[AdminController::class,'slide_add'])->name('admin.slide.add');
+    Route::post('/admin/slides/store',[AdminController::class,'slide_store'])->name('admin.slide.store');
+    Route::get('/admin/slide/{id}/edit',[AdminController::class,'slide_edit'])->name('admin.slide.edit');
+    Route::put('/admin/slide/update',[AdminController::class,'slide_update'])->name('admin.slide.update');
+    Route::delete('/admin/slide/{id}/delete',[AdminController::class,'slide_delete'])->name('admin.slide.delete');
 });
