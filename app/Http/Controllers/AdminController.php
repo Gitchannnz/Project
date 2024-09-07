@@ -14,15 +14,84 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Laravel\Facades\Image;
+
 
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-        return view('admin.index');
-    }
+ public function index()
+{
+    // Fetch the 10 most recent orders
+    $orders = Order::orderBy('created_at', 'DESC')->limit(10)->get();
+
+    // Fetch summarized dashboard data for total orders
+    $dashboardDatas = DB::select("
+        SELECT 
+            sum(total) AS TotalAmount,
+            sum(IF(status = 'ordered', total, 0)) AS TotalOrderedAmount,
+            sum(IF(status = 'delivered', total, 0)) AS TotalDeliveredAmount,
+            sum(IF(status = 'canceled', total, 0)) AS TotalCanceledAmount,
+            COUNT(*) AS Total,
+            sum(IF(status = 'ordered', 1, 0)) AS TotalOrdered,
+            sum(IF(status = 'delivered', 1, 0)) AS TotalDelivered,
+            sum(IF(status = 'canceled', 1, 0)) AS TotalCanceled
+        FROM orders
+    ");
+
+    // Fetch monthly data for the current year
+    $monthlyDatas = DB::select("
+        SELECT 
+            M.id AS MonthNo, 
+            M.name AS MonthName,
+            IFNULL(D.TotalAmount, 0) AS TotalAmount,
+            IFNULL(D.TotalOrderedAmount, 0) AS TotalOrderedAmount,
+            IFNULL(D.TotalDeliveredAmount, 0) AS TotalDeliveredAmount,
+            IFNULL(D.TotalCanceledAmount, 0) AS TotalCanceledAmount
+        FROM month_names M
+        LEFT JOIN (
+            SELECT 
+                MONTH(created_at) AS MonthNo,
+                SUM(total) AS TotalAmount,
+                SUM(CASE WHEN status = 'ordered' THEN total ELSE 0 END) AS TotalOrderedAmount,
+                SUM(CASE WHEN status = 'delivered' THEN total ELSE 0 END) AS TotalDeliveredAmount,
+                SUM(CASE WHEN status = 'canceled' THEN total ELSE 0 END) AS TotalCanceledAmount
+            FROM orders
+            WHERE YEAR(created_at) = YEAR(NOW())
+            GROUP BY MONTH(created_at)
+        ) D 
+        ON D.MonthNo = M.id
+        ORDER BY M.id
+    ");
+
+    // Convert monthly data to comma-separated values for charts
+    $AmountM = implode(',', collect($monthlyDatas)->pluck('TotalAmount')->toArray());
+    $OrderedAmountM = implode(',', collect($monthlyDatas)->pluck('TotalOrderedAmount')->toArray());
+    $DeliveredAmountM = implode(',', collect($monthlyDatas)->pluck('TotalDeliveredAmount')->toArray());
+    $CanceledAmountM = implode(',', collect($monthlyDatas)->pluck('TotalCanceledAmount')->toArray());
+
+    // Calculate the total sums for each status
+    $TotalAmount = collect($monthlyDatas)->sum('TotalAmount');
+    $TotalOrderedAmount = collect($monthlyDatas)->sum('TotalOrderedAmount');
+    $TotalDeliveredAmount = collect($monthlyDatas)->sum('TotalDeliveredAmount');
+    $TotalCanceledAmount = collect($monthlyDatas)->sum('TotalCanceledAmount');
+
+    // Return the data to the view
+    return view('admin.index', compact(
+        'orders', 
+        'dashboardDatas', 
+        'AmountM', 
+        'OrderedAmountM', 
+        'DeliveredAmountM', 
+        'CanceledAmountM', 
+        'TotalAmount', 
+        'TotalOrderedAmount', 
+        'TotalDeliveredAmount', 
+        'TotalCanceledAmount'
+    ));
+}
+
 
     public function brands()
     {
