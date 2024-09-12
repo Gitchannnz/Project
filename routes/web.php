@@ -37,6 +37,8 @@ Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkou
 Route::post('/cart/place-order', [CartController::class, 'place_an_order'])->name('cart.place.an.order');
 Route::get('/order-confirmation', [CartController::class, 'order_confirmation'])->name('cart.order.confirmation');
 
+Route::get('/search',[HomeController::class,'search'])->name('home.search');
+
 Route::middleware(['auth'])->group(function() {
     Route::get('/account-dashboard', [UserController::class, 'index'])->name('user.index');
     Route::get('/account-orders',[UserController::class,'orders'])->name('user.orders');
@@ -82,4 +84,7 @@ Route::middleware(['auth', AuthAdmin::class])->group(function() {
     Route::get('/admin/slide/{id}/edit',[AdminController::class,'slide_edit'])->name('admin.slide.edit');
     Route::put('/admin/slide/update',[AdminController::class,'slide_update'])->name('admin.slide.update');
     Route::delete('/admin/slide/{id}/delete',[AdminController::class,'slide_delete'])->name('admin.slide.delete');
+
+    Route::get('/admin/search',[AdminController::class,'search'])->name('admin.search');
+  
 });

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,11 +10,19 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class,'brand_id');
+        return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    // Method to reduce stock
+    public function reduceStock($quantity)
+    {
+        $this->quantity -= $quantity;
+        $this->save();
     }
 }
+

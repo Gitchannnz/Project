@@ -40,14 +40,14 @@
                     <tr>
                         <th>Order No</th>
                         <td>{{ $order->id }}</td>
-                         <th>Canceled Date</th>
-                        <td>{{ $order->canceled_date }}</td>
+                        <th>Canceled Date</th>
+                        <td>{{ $order->canceled_date ?? 'N/A' }}</td>
+                    </tr>
                     <tr>
                         <th>Order Date</th>
                         <td>{{ $order->created_at }}</td>
                         <th>Delivered Date</th>
-                        <td>{{ $order->delivered_date }}</td>
-                       
+                        <td>{{ $order->delivered_date ?? 'N/A' }}</td>
                     </tr>
                     <tr>
                         <th>Order Status</th>
@@ -134,48 +134,54 @@
                         <td>{{ $order->subtotal }}</td>
                         <th>Status</th>
                         <td>
-                            @if($transaction->status == 'approved')
-                                <span class="badge bg-success">Approved</span>
-                            @elseif($transaction->status == 'declined')
-                                <span class="badge bg-danger">Declined</span>
-                            @elseif($transaction->status == 'refunded')
-                                <span class="badge bg-secondary">Refunded</span>
+                            @if($transaction)
+                                @if($transaction->status == 'approved')
+                                    <span class="badge bg-success">Approved</span>
+                                @elseif($transaction->status == 'declined')
+                                    <span class="badge bg-danger">Declined</span>
+                                @elseif($transaction->status == 'refunded')
+                                    <span class="badge bg-secondary">Refunded</span>
+                                @else
+                                    <span class="badge bg-warning">Pending</span>
+                                @endif
                             @else
-                                <span class="badge bg-warning">Pending</span>
+                                <span class="badge bg-warning">No Transaction Found</span>
                             @endif
-                        </td>   
+                        </td>
                     </tr>
                     <tr>
                         <th>Total</th>
                         <td>{{ $order->total }}</td>
                         <th>Payment Mode</th>
-                        <td>{{ $transaction->mode }}</td>
+                        <td>{{ $transaction->mode ?? 'N/A' }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-<div class="wg-box mt-5">
-    <h5>Update Order Status</h5>
-    <form action="{{ route('admin.order.status.update') }}" method="POST">
-        @csrf
-        @method('PUT')
-        <input type="hidden" name="order_id" value="{{ $order->id }}" />
-        <div class="row">
-            <div class="col-md-3">
-                <div class="select">
-                    <select id="order_status" name="order_status">
-                        <option value="ordered" {{ $order->status == 'ordered' ? 'selected' : '' }}>Ordered</option> 
-                        <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option> 
-                        <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : '' }}>Canceled</option> 
-                    </select>
+        <div class="wg-box mt-5">
+            <h5>Update Order Status</h5>
+            <form action="{{ route('admin.order.status.update') }}" method="POST">
+                @csrf
+                @method('PUT')
+                <input type="hidden" name="order_id" value="{{ $order->id }}" />
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="select">
+                            <select id="order_status" name="order_status">
+                                <option value="ordered" {{ $order->status == 'ordered' ? 'selected' : '' }}>Ordered</option> 
+                                <option value="delivered" {{ $order->status == 'delivered' ? 'selected' : '' }}>Delivered</option> 
+                                <option value="canceled" {{ $order->status == 'canceled' ? 'selected' : '' }}>Canceled</option> 
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-primary tf-button w208">Update Status</button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3">
-                <button type="submit" class="btn btn-primary tf-button w208">Update Status</button>
-            </div>
+            </form>
         </div>
-    </form>
-</div>
 
+    </div>
+</div>
 @endsection

@@ -110,6 +110,7 @@
               </svg>
             </button>
           </h5>
+          
           <div id="accordion-filter-size" class="accordion-collapse collapse show border-0"
             aria-labelledby="accordion-heading-size" data-bs-parent="#size-filters">
             <div class="accordion-body px-0 pb-0">
@@ -189,7 +190,7 @@
               </div>
               <div>
                 <span class="text-secondary">Max Price: </span>
-                <span class="price-range__max">₱2000</span>
+                <span class="price-range__max">₱10000</span>
               </div>
             </div>
           </div>
@@ -214,20 +215,19 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
-              <div class="slide-split_text position-relative d-flex align-items-center"
-                style="background-color: #f5e6e0;">
+              <div class="slide-split_text position-relative d-flex align-items-center" style="background-color: #042444;">
                 <div class="slideshow-text container p-3 p-xl-5">
-                  <h2
-                    class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                    Women's <br /><strong>ACCESSORIES</strong></h2>
-                  <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                    update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</p>
+                  <h2 class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2" style="color: white;">
+                    IGP<br /><strong>PRODUCT</strong>
+                  </h2>
+                  <p class="mb-0 animate animate_fade animate_btt animate_delay-5" style="color: white;">
+                    Welcome to IGP Product, where innovation and quality converge to drive your success!
+                  </p>
                 </div>
               </div>
               <div class="slide-split_media position-relative">
-                <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
-                    alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                <div class="slideshow-bg" style="background-color: #042444;">
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
@@ -235,20 +235,19 @@
 
           <div class="swiper-slide">
             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
-              <div class="slide-split_text position-relative d-flex align-items-center"
-                style="background-color: #f5e6e0;">
+              <div class="slide-split_text position-relative d-flex align-items-center" style="background-color: #042444;">
                 <div class="slideshow-text container p-3 p-xl-5">
-                  <h2
-                    class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                    Women's <br /><strong>ACCESSORIES</strong></h2>
-                  <p class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                    update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</p>
+                  <h2 class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2" style="color: white;">
+                    DISCOVER<br /><strong>IGP PRODUCT</strong>
+                  </h2>
+                  <p class="mb-0 animate animate_fade animate_btt animate_delay-5" style="color: white;">
+                    Where quality and innovation pave the way for your success
+                  </p>
                 </div>
               </div>
               <div class="slide-split_media position-relative">
-                <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
-                    alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                <div class="slideshow-bg" style="background-color: #042444;">
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
@@ -256,25 +255,25 @@
 
           <div class="swiper-slide">
             <div class="slide-split h-100 d-block d-md-flex overflow-hidden">
-              <div class="slide-split_text position-relative d-flex align-items-center"
-                style="background-color: #f5e6e0;">
+              <div class="slide-split_text position-relative d-flex align-items-center" style="background-color: #042444;">
                 <div class="slideshow-text container p-3 p-xl-5">
-                  <h2
-                    class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2">
-                    Women's <br /><strong>ACCESSORIES</strong></h2>
-                  <s class="mb-0 animate animate_fade animate_btt animate_delay-5">Accessories are the best way to
-                    update your look. Add a title edge with new styles and new colors, or go for timeless pieces.</s>
+                  <h2 class="text-uppercase section-title fw-normal mb-3 animate animate_fade animate_btt animate_delay-2" style="color: white;">
+                    DON'T WAIT <br /><strong>BUY NOW</strong>
+                  </h2>
+                  <s class="mb-0 animate animate_fade animate_btt animate_delay-5" style="color: white;">
+                    Start your journey towards excellence with IGP Product. Your path to a brighter future begins here!
+                  </s>
                 </div>
               </div>
               <div class="slide-split_media position-relative">
-                <div class="slideshow-bg" style="background-color: #f5e6e0;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450"
-                    alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                <div class="slideshow-bg" style="background-color: #042444;">
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
           </div>
         </div>
+
 
         <div class="container p-3 p-xl-5">
           <div class="slideshow-pagination d-flex align-items-center position-absolute bottom-0 mb-4 pb-xl-2"></div>

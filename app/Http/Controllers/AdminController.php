@@ -487,36 +487,60 @@ class AdminController extends Controller
             return view('admin.orders', compact('orders'));
         }
 
-       public function order_details($order_id)
-        {
-            $order = Order::find($order_id);
-            $orderItems = OrderItem::where('order_id', $order_id)->orderBy('id')->paginate(12);
-            $transaction = Transaction::where('order_id', $order_id)->first();
-            return view('admin.order-details', compact('order', 'orderItems', 'transaction'));
-        }
+      public function order_details($order_id)
+{
+    // Fetch the order with its items, related products, categories, and brands to avoid multiple queries
+    $order = Order::with('orderItems.product.category', 'orderItems.product.brand')->findOrFail($order_id);
+    
+    // Paginate the order items for displaying in the view
+    $orderItems = OrderItem::where('order_id', $order_id)->orderBy('id')->paginate(12);
+    
+    // Fetch the transaction for this order, if it exists
+    $transaction = Transaction::where('order_id', $order_id)->first();
 
-        public function update_order_status(Request $request)
-        {
-            $order = Order::find($request->order_id);
-            $order->status = $request->order_status;
-            if($request->order_status == 'delivered')
-            {
-                $order->delivered_date = Carbon::now();
-            }
-            else if($request->order_status == 'canceled')
-            {
-                $order->canceled_date = Carbon::now();
-            }
-            $order->save();
+    // Pass the data to the view
+    return view('admin.order-details', compact('order', 'orderItems', 'transaction'));
+}
 
-            if($request->order_status=='delivered')
-            {
-                $transaction =Transaction::where('order_id',$request->order_id)->first();
-                $transaction->status = 'approved';
-                $transaction->save();
+
+       public function update_order_status(Request $request)
+{
+    $order_id = $request->input('order_id');
+    $new_status = $request->input('order_status');
+    
+    $order = Order::find($order_id);
+    if (!$order) {
+        return redirect()->route('admin.orders')->with('status', 'Order not found.');
+    }
+    
+    // Check current status to handle stock adjustment
+    if ($order->status == 'canceled' && $new_status != 'canceled') {
+        // Re-stock the items
+        foreach ($order->orderItems as $item) {
+            $product = Product::find($item->product_id);
+            if ($product) {
+                $product->increaseStock($item->quantity); // Ensure you have this method in your Product model
             }
-            return back()->with("status","Status changed successfully!");
         }
+    } elseif ($order->status != 'canceled' && $new_status == 'canceled') {
+        // Reduce stock for canceled orders
+        foreach ($order->orderItems as $item) {
+            $product = Product::find($item->product_id);
+            if ($product) {
+                $product->reduceStock($item->quantity); // Ensure you have this method in your Product model
+            }
+        }
+    }
+
+    // Update the order status
+    $order->status = $new_status;
+    $order->save();
+
+    // Redirect back with a success message
+    return redirect()->route('admin.order.details', ['order_id' => $order_id])
+                     ->with('status', 'Order status updated successfully.');
+}
+
 
        public function slides()
         {
@@ -619,4 +643,10 @@ class AdminController extends Controller
             return redirect()->route('admin.slides')->with("status", "Slide deleted successfully!");
         }
 
+        public function search(Request $request)
+        {
+            $query = $request->input('query');
+            $results = Product::where('name','LIKE',"%{$query}%")->get()->take(8);
+            return response()->json($results);
+        }
  }

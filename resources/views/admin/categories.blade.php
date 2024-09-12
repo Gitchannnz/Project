@@ -66,6 +66,7 @@
                                     </div>
                                 </td>
                                 <td>{{$category->slug}}</td>
+                                <td>{{$category->products->count()}}</td>
                                 <td><a href="#" target="_blank">0</a></td>
                                 <td>
                                     <div class="list-icon-function">
