@@ -6,17 +6,31 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\Notification;
+use App\Events\OrderNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Surfsidemedia\Shoppingcart\Facades\Cart;
 
+
 class CartController extends Controller
 {
     public function index()
     {
+         // Get all items from the 'cart' instance
         $items = Cart::instance('cart')->content();
-        return view('cart', compact('items'));
+        
+        // Extract the product IDs from the items
+        $productIds = $items->pluck('id'); // Get the IDs of products in the cart
+
+        // Retrieve the product details based on those IDs
+        $products = Product::whereIn('id', $productIds)->get();
+
+
+
+        // Pass the items and corresponding products to the view
+        return view('cart', compact(['items', 'products']));
     }
 
     public function add_to_cart(Request $request)
@@ -114,6 +128,14 @@ class CartController extends Controller
         Session()->forget('checkout');
         Session::put('order_id', $order->id);
 
+
+        $notify = new Notification();
+
+        $notify->url = 'Place Order';
+        $notify->message = 'An order has been placed by ' . $name . ' with a total amount of ' . $total . '. Please review the order.';
+        $notify->is_read = 0;
+        $notify->save();
+
         return redirect()->route('cart.order.confirmation');
     }
 
@@ -149,10 +171,34 @@ class CartController extends Controller
     $this->save();
 }
 
-public function increaseStock($quantity)
+        public function increaseStock($quantity)
+        {
+            $this->stock += $quantity;
+            $this->save();
+        }
+
+
+         public function store(Request $request)
+    {
+        $order = Order::create($request->all());
+
+        event(new OrderNotification($order));
+
+        return response()->json($order, 201);
+    }
+    
+    public function userOrders()
 {
-    $this->stock += $quantity;
-    $this->save();
+    if (!Auth::check()) {
+        return redirect()->route('login');
+    }
+
+    $userId = Auth::user()->id;
+
+    // Retrieve orders for the authenticated user
+    $orders = Order::where('user_id', $userId)->with('orderItems.product')->get();
+
+    return view('user-orders', compact('orders'));
 }
 
 }

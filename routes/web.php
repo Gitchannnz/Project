@@ -86,5 +86,6 @@ Route::middleware(['auth', AuthAdmin::class])->group(function() {
     Route::delete('/admin/slide/{id}/delete',[AdminController::class,'slide_delete'])->name('admin.slide.delete');
 
     Route::get('/admin/search',[AdminController::class,'search'])->name('admin.search');
+    Route::get('/user/orders', [CartController::class, 'userOrders'])->name('user.orders');
   
 });

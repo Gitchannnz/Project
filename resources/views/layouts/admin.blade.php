@@ -78,6 +78,40 @@
 #box-content-search .product-item {
   margin-bottom: 10px;
 }
+
+    .orders-list {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+    .order-notification {
+        padding: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #eaeaea;
+    }
+    .notification-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .notification-header h5 {
+        margin: 0;
+        font-size: 16px;
+    }
+    .notification-header .order-date {
+        font-size: 12px;
+        color: #888;
+    }
+    .notification-body p {
+        margin: 5px 0;
+    }
+    .notification-body ul {
+        padding-left: 20px;
+        list-style-type: disc;
+    }
+    .notification-body ul li {
+        font-size: 14px;
+    }
+
   </style>
                 <div class="section-menu-left">
                     <div class="box-logo">
@@ -216,74 +250,52 @@
                                 </form>
 
                             </div>
-                            <div class="header-grid">
+        
 
-                                <div class="popup-wrap message type-header">
-                                    <div class="dropdown">
-                                        <button class="btn btn-secondary dropdown-toggle" type="button"
-                                            id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <span class="header-item">
-                                                <span class="text-tiny">1</span>
-                                                <i class="icon-bell"></i>
-                                            </span>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end has-content"
-                                            aria-labelledby="dropdownMenuButton2">
-                                            <li>
-                     <h6>Notifications</h6>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-1">
-                                                    <div class="image">
-                                                        <i class="icon-noti-1"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Discount available</div>
-                                                        <div class="text-tiny">Morbi sapien massa, ultricies at rhoncus
-                                                            at, ullamcorper nec diam</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-2">
-                                                    <div class="image">
-                                                        <i class="icon-noti-2"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Account has been verified</div>
-                                                        <div class="text-tiny">Mauris libero ex, iaculis vitae rhoncus
-                                                            et</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-3">
-                                                    <div class="image">
-                                                        <i class="icon-noti-3"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Order shipped successfully</div>
-                                                        <div class="text-tiny">Integer aliquam eros nec sollicitudin
-                                                            sollicitudin</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="message-item item-4">
-                                                    <div class="image">
-                                                        <i class="icon-noti-4"></i>
-                                                    </div>
-                                                    <div>
-                                                        <div class="body-title-2">Order pending: <span>ID 305830</span>
-                                                        </div>
-                                                        <div class="text-tiny">Ultricies at rhoncus at ullamcorper</div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li><a href="{{route('admin.orders')}}" class="tf-button w-full">View Orders</a></li>
+                             <div class="header-grid">
+                         <div class="popup-wrap message type-header">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="header-item">
+                <span class="text-tiny">{{ $orders->count() }}</span>
+                <i class="icon-bell"></i>
+            </span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
+            <li>
+                <div class="container">
+                    <h3>Orders</h3> 
+                    @if($orders->isEmpty())
+                        <p>You have no orders yet.</p>
+                    @else
+                        <div class="orders-list">
+                            @foreach($orders as $order)
+                                <div class="order-notification">
+                                    <div class="notification-header">
+                                        <h5>Order #{{ $order->id }}</h5>
+                                        <span class="order-date">{{ $order->created_at->format('Y-m-d H:i') }}</span>
+                                    </div>
+                                    <div class="notification-body">
+                                        <p>Total: ₱{{ number_format($order->total, 2) }}</p>
+                                        <p>Items:</p>
+                                        <ul>
+                                            @foreach($order->orderItems as $item)
+                                                <li>{{ $item->product->name }} ({{ $item->quantity }})</li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </li>
+             <li><a href="{{route('admin.orders')}}" class="tf-button w-full">View all</a></li>
+        </ul>
+    </div>
+</div>
+
+
 
 
 
