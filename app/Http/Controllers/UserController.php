@@ -51,4 +51,10 @@ class UserController extends Controller
         return back()->with('status',"Order has been canceled successfully");
     }
 
+             public function about()
+    {
+        return view('about.index');
+    }
+
+
 }   

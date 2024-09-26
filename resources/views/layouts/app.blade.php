@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- added asset method on style,body,js and imgs --}}
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'e-IGP') }}</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="surfside media" />
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
@@ -351,10 +351,7 @@
               <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
             </li>
             <li class="navigation__item">
-              <a href="about.html" class="navigation__link">About</a>
-            </li>
-            <li class="navigation__item">
-              <a href="contact.html" class="navigation__link">Contact</a>
+              <a href="{{ route('about') }}" class="navigation__link">About</a>
             </li>
           </ul>
         </div>
@@ -440,11 +437,10 @@
               <a href="{{route('cart.index')}}" class="navigation__link">Cart</a>
             </li>
             <li class="navigation__item">
-              <a href="about.html" class="navigation__link">About</a>
+             <a href="{{ route('about') }}" class="navigation__link">About</a>
+
             </li>
-            <li class="navigation__item">
-              <a href="contact.html" class="navigation__link">Contact</a>
-            </li>
+           
           </ul>
         </nav>
 
@@ -551,7 +547,7 @@
                 </svg>
               </a>
             </li>
-            <!-- <li>
+            <li>
               <a href="#" class="footer__social-link d-block">
                 <svg class="svg-icon svg-icon_twitter" width="14" height="13" viewBox="0 0 14 13"
                   xmlns="http://www.w3.org/2000/svg">
@@ -567,7 +563,7 @@
                 </svg>
               </a>
             </li> -->
-            <!-- <li>
+            <li>
               <a href="#" class="footer__social-link d-block">
                 <svg class="svg-icon svg-icon_youtube" width="16" height="11" viewBox="0 0 16 11"
                   xmlns="http://www.w3.org/2000/svg">
@@ -576,27 +572,25 @@
                 </svg>
               </a>
             </li> -->
-            <!-- <li>
+             <li>
               <a href="#" class="footer__social-link d-block">
                 <svg class="svg-icon svg-icon_pinterest" width="14" height="15" viewBox="0 0 14 15"
                   xmlns="http://www.w3.org/2000/svg">
                   <use href="#icon_pinterest" />
                 </svg>
               </a>
-            </li> -->
+            </li> 
           </ul>
         </div>
 
         <div class="footer-column footer-menu mb-4 mb-lg-0">
           <h6 class="sub-menu__title text-uppercase">Company</h6>
           <ul class="sub-menu__list list-unstyled">
-        <!--
-            <li class="sub-menu__item"><a href="about-2.html" class="menu-link menu-link_us-s">About Us</a></li>
+      
+            <li class="sub-menu__item"><a href="{{route('about')}}" class="menu-link menu-link_us-s">About Us</a></li>
             <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Careers</a></li>
             <li class="sub-menu__item"><a href="#" class="menu-link menu-link_us-s">Affiliates</a></li>
-            <li class="sub-menu__item"><a href="blog_list1.html" class="menu-link menu-link_us-s">Blog</a></li>
-            <li class="sub-menu__item"><a href="contact-2.html" class="menu-link menu-link_us-s">Contact Us</a></li>
-            -->
+            <li class="sub-menu__item"><a href="blog_list1.html" class="menu-link menu-link_us-s">Blog</a></li>          
           </ul>
         </div>
 

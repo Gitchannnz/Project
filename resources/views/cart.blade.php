@@ -69,22 +69,19 @@
                                 <div class="qty-control position-relative">
                                     <input type="number" name="quantity" value="{{$item->qty}}" min="1" max="{{ $product->quantity }}" class="qty-control__number text-center">
                                     
-                                    <form method="POST" action="{{route('cart.qty.decrease',['rowId'=>$item->rowId])}}">
-                                        @csrf
-                                        <div class="qty-control__reduce">-</div>
-                                    </form>
-                                    
-                                    <form method="POST" action="{{route('cart.qty.increase',['rowId'=>$item->rowId])}}">
-                                        @csrf
-                                        <div class="qty-control__increase">+</div>
-                                    </form>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="shopping-cart__subtotal">₱{{$item->subTotal()}}</span>
-                            </td>
-                            <td>
-                                <form method="POST" action="{{route('cart.item.remove',['rowId'=>$item->rowId])}}">
+                                    <form method="POST" action="{{ route('cart.qty.decrease', ['rowId' => $item->rowId]) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="qty-control__reduce">-</div>
+                                </form>
+
+                                <form method="POST" action="{{ route('cart.qty.increase', ['rowId' => $item->rowId]) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="qty-control__increase">+</div>
+                                </form>
+
+                                <form method="POST" action="{{ route('cart.item.remove', ['rowId' => $item->rowId]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <a href="javascript:void(0)" class="remove-cart">
@@ -94,6 +91,7 @@
                                         </svg>
                                     </a>
                                 </form>
+
                             </td>
                         </tr>
                     @endforeach
@@ -138,34 +136,49 @@
     </section>
 </main>
 @endsection
-
 @push('scripts')
 <script>
- $(function() {
+$(function() {
+   
     $(".qty-control__increase").on("click", function(e) {
-        const input = $(this).siblings('input.qty-control__number');
-        const max = parseInt(input.attr('max'));
-        const value = parseInt(input.val());
-        
-        if (value < max) {
-            $(this).closest('form').submit(); // Submit the form if the quantity is valid
-        }
+        e.preventDefault(); 
+        const form = $(this).closest('form');
+        form.submit(); 
     });
 
-    $(".qty-control__reduce").on("click", function() {
-        $(this).closest('form').submit(); // Reduce without checking
+
+    $(".qty-control__reduce").on("click", function(e) {
+        e.preventDefault(); 
+        const form = $(this).closest('form');
+        form.submit(); 
     });
 
-    $(".remove-cart").on("click", function() {
-        $(this).closest('form').submit(); // Remove without checking
+    
+    $(".remove-cart").on("click", function(e) {
+        e.preventDefault(); 
+        const form = $(this).closest('form');
+        form.submit(); 
     });
 
+  
     $(".qty-control__number").each(function() {
         const max = parseInt($(this).attr('max'));
         const value = parseInt($(this).val());
         
         if (value >= max) {
             $(this).siblings('.qty-control__increase').addClass('disabled').prop('disabled', true);
+        }
+    });
+
+
+    $(".qty-control__number").on("change", function() {
+        const max = parseInt($(this).attr('max'));
+        const value = parseInt($(this).val());
+        
+        if (value >= max) {
+            $(this).siblings('.qty-control__increase').addClass('disabled').prop('disabled', true);
+        } else {
+            $(this).siblings('.qty-control__increase').removeClass('disabled').prop('disabled', false);
         }
     });
 });

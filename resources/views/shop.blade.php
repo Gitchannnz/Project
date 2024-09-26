@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <div class="accordion" id="color-filters">
+      {{-- <div class="accordion" id="color-filters">
         <div class="accordion-item mb-4 pb-3">
           <h5 class="accordion-header" id="accordion-heading-1">
             <button class="accordion-button p-0 border-0 fs-5 text-uppercase" type="button" data-bs-toggle="collapse"
@@ -94,7 +94,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
 
       <div class="accordion" id="size-filters">
         <div class="accordion-item mb-4 pb-3">
@@ -227,7 +227,7 @@
               </div>
               <div class="slide-split_media position-relative">
                 <div class="slideshow-bg" style="background-color: #042444;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.png" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
@@ -247,7 +247,7 @@
               </div>
               <div class="slide-split_media position-relative">
                 <div class="slideshow-bg" style="background-color: #042444;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.png" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
@@ -267,7 +267,7 @@
               </div>
               <div class="slide-split_media position-relative">
                 <div class="slideshow-bg" style="background-color: #042444;">
-                  <img loading="lazy" src="assets/images/shop/shop_banner3.jpg" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
+                  <img loading="lazy" src="assets/images/shop/shop_banner3.png" width="630" height="450" alt="Women's accessories" class="slideshow-bg__img object-fit-cover" />
                 </div>
               </div>
             </div>
@@ -384,16 +384,7 @@
                             @endif
                         </span>
                     </div>
-                    <div class="product-card__review d-flex align-items-center">
-                        <div class="reviews-group d-flex">
-                            @for ($i = 0; $i < 5; $i++)
-                            <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
-                                <use href="#icon_star" />
-                            </svg>
-                            @endfor
-                        </div>
-                        <span class="reviews-note text-lowercase text-secondary ms-1">8k+ reviews</span>
-                    </div>
+
                 {{--ADDING WISHLIST--}}
                     @if(Cart::instance('wishlist')->content()->where('id',$product->id)->count()>0)
                       <form method="POST" action="{{route('wishlist.item.remove',['rowId'=>Cart::instance('wishlist')->content()->where('id',$product->id)->first()->rowId])}}">

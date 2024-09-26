@@ -59,7 +59,7 @@
 
     .table> :not(caption)>tr>th {
       padding: 0.625rem 1.5rem .25rem !important;
-      background-color: #042444 !important;
+      background-color: #6a6e51 !important;
     }
 
     .table-bordered>:not(caption)>*>* {
@@ -127,14 +127,18 @@
                     <tr>
                         <th>Order No</th>
                         <td>{{ $order->id }}</td>
-                        <th>Canceled Date</th>
-                        <td>{{ $order->canceled_date }}</td>
+                        <th>Mobile</th>
+                        <td>{{ $order->phone }}</td>
+                        <th>Zip Code</th>
+                        <td>{{ $order->zip }}</td>
                     </tr>
                     <tr>
                         <th>Order Date</th>
                         <td>{{ $order->created_at }}</td>
                         <th>Delivered Date</th>
                         <td>{{ $order->delivered_date }}</td>
+                        <th>Canceled Date</th>
+                        <td>{{ $order->canceled_date }}</td>
                     </tr>
                     <tr>
                         <th>Order Status</th>
@@ -234,8 +238,6 @@
                     <tr>
                         <th>Total</th>
                         <td>{{ $order->total }}</td>
-                        <th>Payment Mode</th>
-                        <td>{{ $transaction->mode }}</td>
                     </tr>
                 </tbody>
             </table>

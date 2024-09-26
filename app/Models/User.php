@@ -46,4 +46,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function institutional_id() // Ensure this field is accessible
+{
+    return $this->institutional_id; // Or however you want to retrieve it
+}
 }

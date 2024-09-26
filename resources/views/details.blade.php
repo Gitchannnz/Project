@@ -80,7 +80,7 @@
             </div><!-- /.shop-acs -->
           </div>
           <h1 class="product-single__name">{{$product->name}}</h1>
-          <div class="product-single__rating">
+          {{-- <div class="product-single__rating">
             <div class="reviews-group d-flex">
               <svg class="review-star" viewBox="0 0 9 9" xmlns="http://www.w3.org/2000/svg">
                 <use href="#icon_star" />
@@ -99,7 +99,7 @@
               </svg>
             </div>
             <span class="reviews-note text-lowercase text-secondary ms-1"></span>
-          </div>
+          </div> --}}
           <div class="product-single__price">
             <span class="current-price">
                 @if($product->sale_price)
@@ -215,10 +215,10 @@
               href="#tab-additional-info" role="tab" aria-controls="tab-additional-info"
               aria-selected="false">Additional Information</a>
           </li>
-          <li class="nav-item" role="presentation">
+          {{-- <li class="nav-item" role="presentation">
             <a class="nav-link nav-link_underscore" id="tab-reviews-tab" data-bs-toggle="tab" href="#tab-reviews"
               role="tab" aria-controls="tab-reviews" aria-selected="false">Reviews (2)</a>
-          </li>
+          </li> --}}
         </ul>
         <div class="tab-content">
           <div class="tab-pane fade show active" id="tab-description" role="tabpanel"
@@ -251,7 +251,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
+          {{-- <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews-tab">
             <h2 class="product-single__reviews-title">Reviews</h2>
             <div class="product-single__reviews-list">
               <div class="product-single__reviews-item">
@@ -379,7 +379,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
     </section>
     <section class="products-carousel container">
       <h2 class="h3 text-uppercase mb-4 pb-xl-2 mb-xl-4">Related <strong>Products</strong></h2>

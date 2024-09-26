@@ -112,6 +112,104 @@
         font-size: 14px;
     }
 
+/* Style for the header grid container */
+.header-grid {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Style for the notification popup */
+.popup-wrap {
+    position: relative;
+}
+
+.popup-wrap .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.popup-wrap .dropdown-toggle .header-item {
+    display: flex;
+    align-items: center;
+    color: #333;
+}
+
+.popup-wrap .dropdown-toggle .header-item .icon-bell {
+    font-size: 20px; /* Adjust size as needed */
+    margin-left: 8px;
+}
+
+.popup-wrap .dropdown-toggle .header-item .text-tiny {
+    font-size: 12px;
+    margin-right: 4px;
+    color: #888;
+}
+
+/* Style for the dropdown menu */
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    max-height: 400px; /* Adjust based on content */
+    overflow-y: auto;
+}
+
+.dropdown-menu .container {
+    padding: 16px;
+}
+
+.dropdown-menu .container h3 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.dropdown-menu .notification-list {
+    margin-top: 16px;
+}
+
+.dropdown-menu .notification-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-menu .notification-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu .notification-header a {
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-menu .notification-header a:hover {
+    text-decoration: underline;
+}
+
+.dropdown-menu .notification-header h5 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.dropdown-menu .notification-date {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Style for empty notifications message */
+.dropdown-menu .container p {
+    color: #888;
+    margin: 0;
+    text-align: center;
+    font-size: 14px;
+}
+
   </style>
                 <div class="section-menu-left">
                     <div class="box-logo">
@@ -192,18 +290,37 @@
                                     </ul>
                                 </li>
 
-                            <li class="menu-item">
-                                        <a href="{{ route('admin.orders') }}" class="menu-item-button">
-                                            <div class="icon"><i class="icon-file-plus"></i></div>
-                                            <div class="text">Orders</div>
-                                        </a>
-                                    </li>
+                               <li class="menu-item has-children">
+                                    <a href="javascript:void(0);" class="menu-item-button">
+                                        <div class="icon"><i class="icon-file-plus"></i></div>
+                                        <div class="text">Order</div>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="sub-menu-item">
+                                            <a href="{{ route('admin.orders') }}" class="">
+                                                <div class="text">Orders</div>
+                                            </a>
+                                        </li>
+                                        <li class="sub-menu-item">
+                                            <a href="{{ route('admin.transactions.history') }}" class="">
+                                                <div class="text">Transactions History</div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                                     <li class="menu-item">
                                         <a href="{{ route('admin.slides') }}" class="menu-item-button">
                                             <div class="icon"><i class="icon-image"></i></div>
                                             <div class="text">Slides</div>
                                         </a>
                                     </li>
+                                    <li class="menu-item">
+                                        <a href="{{ route('admin.settings') }}" class="menu-item-button">
+                                            <div class="icon"><i class="icon-settings"></i></div> 
+                                            <div class="text">Settings</div>
+                                        </a>
+                                    </li>
+
                                     <li class="menu-item">
                                         <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                             @csrf
@@ -250,56 +367,63 @@
                                 </form>
 
                             </div>
-        
-
-                             <div class="header-grid">
-                         <div class="popup-wrap message type-header">
-    <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-            <span class="header-item">
-                <span class="text-tiny">{{ $orders->count() }}</span>
-                <i class="icon-bell"></i>
-            </span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
-            <li>
-                <div class="container">
-                    <h3>Orders</h3> 
-                    @if($orders->isEmpty())
-                        <p>You have no orders yet.</p>
-                    @else
-                        <div class="orders-list">
-                            @foreach($orders as $order)
-                                <div class="order-notification">
-                                    <div class="notification-header">
-                                        <h5>Order #{{ $order->id }}</h5>
-                                        <span class="order-date">{{ $order->created_at->format('Y-m-d H:i') }}</span>
+  
+                                <div class="popup-wrap user type-header">
+                                <div class="header-grid">
+                                    @if(isset($notifications) && $notifications->isNotEmpty())
+                                    <div class="popup-wrap message type-header">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="header-item">
+                                                    <span class="text-tiny">{{ $notifications->count() }}</span>
+                                                    <i class="icon-bell"></i>
+                                                </span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
+                                                <li>
+                                                    <div class="container">
+                                                        <h3>Notifications</h3>
+                                                        @if($notifications->isEmpty())
+                                                            <p>No notifications at the moment.</p>
+                                                        @else
+                                                            <div class="notification-list">
+                                                                @foreach($notifications as $notification)
+                                                                    <div class="notification-item">
+                                                                        <div class="notification-header">
+                                                                            <a href="{{ $notification->getNotificationUrl() }}">
+                                                                                <h5>{{ $notification->message }}</h5>
+                                                                            </a>
+                                                                            <span class="notification-date">{{ $notification->created_at->format('Y-m-d H:i') }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="notification-body">
-                                        <p>Total: ₱{{ number_format($order->total, 2) }}</p>
-                                        <p>Items:</p>
-                                        <ul>
-                                            @foreach($order->orderItems as $item)
-                                                <li>{{ $item->product->name }} ({{ $item->quantity }})</li>
-                                            @endforeach
-                                        </ul>
+                                    @else
+                                    <div class="popup-wrap message type-header">
+                                        <div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="header-item">
+                                                    <span class="text-tiny">0</span>
+                                                    <i class="icon-bell"></i>
+                                                </span>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton2">
+                                                <li>
+                                                    <div class="container">
+                                                        <p>No notifications available.</p>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+                                    @endif
                                 </div>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-            </li>
-             <li><a href="{{route('admin.orders')}}" class="tf-button w-full">View all</a></li>
-        </ul>
-    </div>
-</div>
-
-
-
-
-
-
                                 <div class="popup-wrap user type-header">
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -314,16 +438,6 @@
                                             </span>
                                         </button>
                                       <ul class="dropdown-menu dropdown-menu-end has-content" aria-labelledby="dropdownMenuButton3">
-                                            <li>
-                                                <a href="#" class="user-item">
-                                                    <div class="icon">
-                                                        <i class="icon-user"></i>
-                                                    </div>
-                                                    <div class="body-title-2">Account</div>
-                                                </a>
-                                            </li>
-
-                                            <!-- Other menu items -->
 
                                             <li>
                                                 <form method="POST" action="{{ route('logout') }}" id="logout-form" style="display: none;">
@@ -331,7 +445,7 @@
                                                 </form>
                                                 <a href="{{ route('logout') }}" class="user-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                     <div class="icon">
-                                                        <i class="icon-log-out"></i> <!-- Add the logout icon here -->
+                                                        <i class="icon-log-out"></i>
                                                     </div>
                                                     <div class="body-title-2">Log out</div>
                                                 </a>

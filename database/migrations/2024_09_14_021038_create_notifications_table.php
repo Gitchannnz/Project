@@ -4,29 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class AddTypeAndRelatedIdToNotificationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-
-            $table->string('url');
-            $table->longText('message');
-            $table->tinyInteger('is_read');
-
-            $table->timestamps();
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->string('type'); // e.g., 'product', 'order', etc.
+            $table->unsignedBigInteger('related_id'); // ID of related entity
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('notifications');
+        Schema::table('notifications', function (Blueprint $table) {
+            $table->dropColumn(['type', 'related_id']);
+        });
     }
-};
+}

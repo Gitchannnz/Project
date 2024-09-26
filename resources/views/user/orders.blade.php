@@ -68,8 +68,8 @@
                                         <td class="text-center">{{ $order->id }}</td>
                                         <td class="text-center">{{ $order->name }}</td>
                                         <td class="text-center">{{ $order->phone }}</td>
-                                        <td class="text-center">${{$order->subtotal}}</td>
-                                        <td class="text-center">${{$order->total}}</td> 
+                                        <td class="text-center">₱{{$order->subtotal}}</td>
+                                        <td class="text-center">₱{{$order->total}}</td> 
                                         <td class="text-center">
                                              @if($order->status == 'delivered')
                                                 <span class="badge bg-success">Delivered</span>

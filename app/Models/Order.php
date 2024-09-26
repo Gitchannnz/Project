@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +13,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function orderItems()
+    public function orderItems() // This is correct; ensure you're using this name
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -23,4 +22,11 @@ class Order extends Model
     {
         return $this->hasOne(Transaction::class);
     }
+
+    // Update the getTotalAttribute to use orderItems instead of items
+    public function getTotalAttribute()
+    {
+        return $this->orderItems->sum('price'); // Use orderItems here
+    }
 }
+

@@ -3,13 +3,16 @@
 <main>
 
 <style>
-  /* Styles for circular category images in "You Might Like" */
-  .category-carousel .swiper-slide img {
-    border-radius: 50%; /* Makes the category images circular */
-    object-fit: cover;  /* Ensures the image fits inside the circular frame */
-    width: 124px;       /* Size for the category images */
-    height: 124px;
-  }
+
+.category-carousel .swiper-slide img {
+    border-radius: 50%;  
+    object-fit: cover;     
+    width: 50px;          
+    height: 50px;
+    background-color: #f0f0f0;  
+}
+
+
 </style>
 
 <section class="swiper-container js-swiper-slider swiper-number-pagination slideshow" data-settings='{
@@ -25,7 +28,7 @@
     <div class="swiper-slide">
       <div class="overflow-hidden position-relative h-100">
         <div class="slideshow-character position-absolute bottom-0 pos_right-center">
-          <img loading="lazy" src="{{ asset('uploads/slides') }}/{{$slide->image}}" width="542" height="733"
+          <img loading="lazy" src="{{ asset('uploads/slides') }}/{{$slide->image}}" width="400px" height="700px"
             alt=""
             class="slideshow-character__img animate animate_fade animate_btt animate_delay-9 w-auto h-auto" />
           <div class="character_markup type2">
@@ -54,14 +57,14 @@
     </div>
   </div>
 </section>
-
 <div class="container mw-1620 bg-white border-radius-10">
-  <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
-  <section class="category-carousel container">
-    <h2 class="section-title text-center mb-3 pb-xl-2 mb-xl-4">You Might Like</h2>
+            <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
+            <section class="category-carousel container">
+                <h2 class="section-title text-center mb-3 pb-xl-2 mb-xl-4">You Might Like</h2>
 
-    <div class="position-relative">
-      <div class="swiper-container js-swiper-slider" data-settings='{
+                <div class="position-relative">
+                    <div class="swiper-container js-swiper-slider"
+                        data-settings='{
           "autoplay": {
             "delay": 5000
           },
@@ -98,17 +101,20 @@
             }
           }
         }'>
-        <div class="swiper-wrapper">
-          @foreach ($categories as $category)
-          <div class="swiper-slide">
-            <img loading="lazy" class="w-100 h-auto mb-3" src="{{ asset('uploads/categories') }}/{{$category->image}}" width="124" height="124" alt="" />
-            <div class="text-center">
-              <a href="{{route('shop.index',['categories'=>$category->id])}}" class="menu-link fw-medium">{{$category->name}}</a>
-            </div>
-          </div>
-           @endforeach
-        </div><!-- /.swiper-wrapper -->
-      </div><!-- /.swiper-container js-swiper-slider -->
+                        <div class="swiper-wrapper">
+                            @foreach ($categories as $category)
+                                <div class="swiper-slide">
+                                    <img loading="lazy" class="w-100 h-auto mb-3"
+                                        src="{{ asset('uploads/categories') }}/{{ $category->image }}" width="124"
+                                        height="124" alt="" />
+                                    <div class="text-center">
+                                        <a href="{{ route('shop.index', ['categories' => $category->id]) }}"
+                                            class="menu-link fw-medium">{{ $category->name }}</a>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div><!-- /.swiper-wrapper -->
+                    </div><!-- /.swiper-container js-swiper-slider -->
 
       <div
         class="products-carousel__prev products-carousel__prev-1 position-absolute top-50 d-flex align-items-center justify-content-center">
@@ -229,7 +235,7 @@
 
         <div class="mb-3 mb-xl-5 pt-1 pb-4"></div>
 
-      <section class="category-banner container">
+    <!--  <section class="category-banner container">
         <div class="row">
           <div class="col-md-6">
             <div class="category-banner__item border-radius-10 mb-5">
@@ -258,7 +264,7 @@
             </div>
           </div>
         </div>
-      </section>
+      </section> -->
 
   <section class="products-grid container">
     <h2 class="section-title text-center mb-3 pb-xl-3 mb-xl-4">Featured Products</h2>

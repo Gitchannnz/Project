@@ -190,6 +190,23 @@
                     </fieldset>
                     @error('featured') <span class="alert alert-danger text-center">{{$message}} @enderror 
 
+                        <fieldset class="sizes">
+                    <div class="body-title mb-10">Sizes <span class="tf-color-1">*</span></div>
+                    <div class="select">
+                        <select class="" name="size">
+                            <option value="">Select Size</option>
+                            <option value="XS" {{ old('size') == 'XS' ? 'selected' : '' }}>XS</option>
+                            <option value="S" {{ old('size') == 'S' ? 'selected' : '' }}>S</option>
+                            <option value="M" {{ old('size') == 'M' ? 'selected' : '' }}>M</option>
+                            <option value="L" {{ old('size') == 'L' ? 'selected' : '' }}>L</option>
+                            <option value="XL" {{ old('size') == 'XL' ? 'selected' : '' }}>XL</option>
+                            <option value="XXL" {{ old('size') == 'XXL' ? 'selected' : '' }}>XXL</option>
+                        </select>
+                    </div>
+                </fieldset>
+                @error('size') <span class="alert alert-danger text-center">{{ $message }}</span> @enderror
+
+
                 </div>
                 <div class="cols gap10">
                     <button class="tf-button w-full" type="submit">Add product</button>
